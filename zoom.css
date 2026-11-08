@@ -1,0 +1,117 @@
+/* Zoom a demanda para diagramas Mermaid.
+   Al pasar el cursor sobre un diagrama se indica que es ampliable;
+   al hacer clic se abre un overlay a pantalla completa con zoom y arrastre. */
+
+/* Diagrama en la página: indica que es interactivo */
+.mermaid {
+  cursor: zoom-in;
+}
+
+/* Botón flotante de "ampliar" que aparece sobre el diagrama */
+.diagram-wrapper {
+  position: relative;
+}
+
+.diagram-zoom-btn {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  line-height: 1;
+  color: var(--md-primary-bg-color, #fff);
+  background: var(--md-primary-fg-color, #3f51b5);
+  border: none;
+  border-radius: 0.2rem;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.diagram-wrapper:hover .diagram-zoom-btn {
+  opacity: 0.9;
+}
+
+.diagram-zoom-btn:hover {
+  opacity: 1;
+}
+
+/* Overlay a pantalla completa */
+.diagram-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  cursor: zoom-out;
+}
+
+.diagram-overlay.is-open {
+  display: flex;
+}
+
+.diagram-overlay .diagram-stage {
+  cursor: grab;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.diagram-overlay .diagram-stage:active {
+  cursor: grabbing;
+}
+
+.diagram-overlay .diagram-stage svg {
+  max-width: none;
+  height: auto;
+  /* Fondo oscuro acorde al tema "dark" de Mermaid, para que las líneas y
+     textos claros del diagrama mantengan contraste al ampliar. */
+  background: #1e1e2e;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.5);
+}
+
+/* Controles del overlay */
+.diagram-overlay-controls {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2001;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.diagram-overlay-controls button {
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 1.1rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.diagram-overlay-controls button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.diagram-overlay-hint {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2001;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 1rem;
+}
