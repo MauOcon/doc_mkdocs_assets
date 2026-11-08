@@ -46,6 +46,16 @@ git commit -m "Actualiza assets compartidos"
 El submódulo queda fijado a un commit concreto: la documentación solo cambia cuando haces ese
 commit, así que una actualización aquí no rompe proyectos que no la han tomado.
 
+## Modificar los assets
+
+Los cambios se hacen en este repositorio, ya sea en su clon propio o desde `docs/assets/` de
+una documentación (que es un clon completo de este repo). Si lo haces desde una documentación,
+recuerda que el submódulo queda en *detached HEAD*: ejecuta `git switch main` antes de editar, y
+haz `push` aquí **antes** de hacer commit del proyecto que lo contiene.
+
+Los pasos completos están en la sección "Modificar los assets desde una documentación" del
+`README-docs.md` de la plantilla (`doc_mkdocs_template`).
+
 ## Notas
 
 - El fondo oscuro del overlay (`#1e1e2e`) va acoplado a `theme: dark` de Mermaid en
